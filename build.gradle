@@ -1,0 +1,16 @@
+plugins {
+    id 'eclipse'
+    id 'idea'
+}
+
+allprojects {
+    version = projectVersion
+    ext.appName = 'AngryBirds'
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+        maven { url 'https://oss.sonatype.org/content/repositories/releases/' }
+        maven { url 'https://jitpack.io' }
+    }
+}

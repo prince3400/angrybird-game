@@ -1,0 +1,2 @@
+rootProject.name = 'angrybirds'
+include 'core', 'desktop'

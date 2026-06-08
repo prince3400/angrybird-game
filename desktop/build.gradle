@@ -1,0 +1,33 @@
+plugins {
+    id 'java-library'
+    id 'application'
+}
+
+sourceCompatibility = 11
+targetCompatibility = 11
+sourceSets.main.resources.srcDirs += [rootProject.file('assets').path]
+application.mainClass = 'com.game.angrybirds.DesktopLauncher'
+eclipse.project.name = appName + '-desktop'
+
+dependencies {
+    implementation project(':core')
+    api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+    api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+    api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+}
+
+run {
+    workingDir = rootProject.file('assets').path
+    setIgnoreExitValue(true)
+    jvmArgs += "-XstartOnFirstThread"
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    dependsOn configurations.runtimeClasspath
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest {
+        attributes 'Main-Class': application.mainClass.get()
+    }
+}
