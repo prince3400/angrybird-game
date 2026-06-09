@@ -31,7 +31,16 @@ public class UIFactory {
     public static Skin createDefaultSkin(GameAssets assets) {
         // Skin skin = new Skin();
         Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+
+        // Ensure both Buttons and Labels use the project's font.
+        // LibGDX Label(...) constructors look up a LabelStyle from the skin (commonly named "default").
         skin.add("default-font", assets.font);
+
+        com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle labelStyle =
+                new com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle();
+        labelStyle.font = assets.font;
+        skin.add("default", labelStyle);
+
         com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle style =
                 new com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle();
         style.font = assets.font;
@@ -40,6 +49,7 @@ public class UIFactory {
         style.down = buttonBg;
         style.over = buttonBg;
         skin.add("default", style);
+
         return skin;
     }
 
