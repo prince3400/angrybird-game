@@ -57,7 +57,12 @@ public class LevelManager {
 
         // Pigs
         for (LevelData.PigPlacement placement : currentLevel.pigs) {
-            Pig pig = new Pig(world, new Sprite(assets.region(assets.pigTexture)), placement.x, placement.y);
+            Sprite pigSprite = new Sprite(assets.region(assets.pigTexture));
+            // Match sprite size to Box2D physics radius (pig body is a circle).
+            float size = GameConstants.PIG_RADIUS * 2f;
+            pigSprite.setSize(size, size);
+
+            Pig pig = new Pig(world, pigSprite, placement.x, placement.y);
             pigs.add(pig);
         }
 

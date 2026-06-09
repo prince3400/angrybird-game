@@ -37,10 +37,10 @@ public class LevelLoader {
         level.blocks.add(new LevelData.BlockPlacement(BlockType.WOOD, 948, 168));
         level.blocks.add(new LevelData.BlockPlacement(BlockType.GLASS, 996, 168));
         level.blocks.add(new LevelData.BlockPlacement(BlockType.WOOD, 948, 216));
-        level.blocks.add(new LevelData.BlockPlacement(BlockType.WOOD, 996, 216));
-        level.blocks.add(new LevelData.BlockPlacement(BlockType.WOOD, 972, 264));
+        level.blocks.add(new LevelData.BlockPlacement(BlockType.GLASS, 996, 216));
+        level.blocks.add(new LevelData.BlockPlacement(BlockType.STONE, 972, 264));
 
-        level.pigs.add(new LevelData.PigPlacement(972, 310));
+        level.pigs.add(new LevelData.PigPlacement(972, 288));
         return level;
     }
 
@@ -66,8 +66,8 @@ public class LevelLoader {
         level.blocks.add(new LevelData.BlockPlacement(BlockType.STONE, 946, 216));
         level.blocks.add(new LevelData.BlockPlacement(BlockType.WOOD, 922, 264));
 
-        level.pigs.add(new LevelData.PigPlacement(922, 310));
-        level.pigs.add(new LevelData.PigPlacement(970, 168));
+        level.pigs.add(new LevelData.PigPlacement(922, 288));
+        level.pigs.add(new LevelData.PigPlacement(970, 192));
         return level;
     }
 
@@ -93,9 +93,9 @@ public class LevelLoader {
         level.blocks.add(new LevelData.BlockPlacement(BlockType.WOOD, 872, 264));
         level.blocks.add(new LevelData.BlockPlacement(BlockType.WOOD, 920, 264));
 
-        level.pigs.add(new LevelData.PigPlacement(872, 310));
-        level.pigs.add(new LevelData.PigPlacement(944, 310));
-        level.pigs.add(new LevelData.PigPlacement(896, 168));
+        level.pigs.add(new LevelData.PigPlacement(872, 288));
+        level.pigs.add(new LevelData.PigPlacement(944, 288));
+        level.pigs.add(new LevelData.PigPlacement(896, 192));
         return level;
     }
 

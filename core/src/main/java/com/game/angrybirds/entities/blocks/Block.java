@@ -28,6 +28,8 @@ public abstract class Block extends Entity {
 
     private static Body createBody(World world, float x, float y,
                                    float density, float friction, float restitution) {
+        // Entity base class sets body userData to `this`, so fixture userData can remain null.
+        // Contact listener uses body userData, so we pass null for fixture userData here.
         return BodyFactory.createBox(
                 world, x, y,
                 GameConstants.BLOCK_WIDTH, GameConstants.BLOCK_HEIGHT,

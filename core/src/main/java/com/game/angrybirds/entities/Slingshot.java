@@ -62,9 +62,13 @@ public class Slingshot {
             return null;
         }
         dragging = false;
-        Vector2 launchVel = MathUtils.computeLaunchVelocity(dragVector);
+
+        // Dragging vector points from anchor->dragEnd (because dragVector is anchor - dragEnd).
+        // To launch "backwards" (towards the anchor) like classic Angry Birds,
+        // flip the direction before converting to launch velocity.
+        Vector2 launchVel = MathUtils.computeLaunchVelocity(dragVector).scl(-1f);
+
         attachedBird.launch(launchVel);
-        Bird launched = attachedBird;
         attachedBird = null;
         return launchVel;
     }
@@ -85,7 +89,9 @@ public class Slingshot {
     public Vector2[] getTrajectoryPoints() {
         if (!dragging || attachedBird == null) return new Vector2[0];
 
-        Vector2 launchVel = MathUtils.computeLaunchVelocity(dragVector);
+        // Trajectory prediction must match the actual launch direction.
+        // release() flips the launch velocity, so we do the same here.
+        Vector2 launchVel = MathUtils.computeLaunchVelocity(dragVector).scl(-1f);
         Vector2 origin = new Vector2(anchor.x, anchor.y + GameConstants.BIRD_RADIUS);
         Vector2[] points = new Vector2[GameConstants.TRAJECTORY_DOT_COUNT];
 

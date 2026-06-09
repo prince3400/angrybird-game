@@ -1,0 +1,13 @@
+- [ ] Step 1: Create TODO.md scaffolding for foundation refactor
+- [ ] Step 2: Add JSON-based level loader scaffolding (keep existing hardcoded fallback)
+  - [ ] Introduce LevelJsonLoader reading assets/levels/*.json
+  - [ ] Extend LevelData with optional star targets + queued birds support fields (backward compatible)
+  - [ ] Update LevelManager to use the new loader transparently
+- [ ] Step 3: Upgrade procedural asset pipeline (non-trivial “cartoon-like” generator)
+  - [ ] Replace TextureGenerator basic shapes with shaded/outlined procedural sprites (still generated when assets missing)
+  - [ ] Add TextureAtlas support path in GameAssets (load atlas if present; fallback to procedural TextureRegions)
+- [ ] Step 4: Add camera controller hook points for smoothing + zoom + shake
+  - [ ] Implement CameraController class (lerp/damped follow/zoom) and integrate into AbstractScreen/GameScreen render loop
+  - [ ] Add event hook method(s) for screen shake trigger (called from collision pipeline later)
+- [ ] Step 5: Ensure build/run works on macOS M1
+  - [ ] Run: ./gradlew desktop:run

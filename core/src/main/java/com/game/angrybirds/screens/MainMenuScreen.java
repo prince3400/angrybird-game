@@ -3,6 +3,7 @@ package com.game.angrybirds.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.game.angrybirds.AngryBirdsGame;
@@ -23,9 +24,10 @@ public class MainMenuScreen extends AbstractScreen {
         stage.clear();
         Table table = UIFactory.createMenuTable();
 
-        Label title = new Label("Angry Birds Clone", UIFactory.createDefaultSkin(game.getAssets()));
-        title.setFontScale(2f);
-        table.add(title).padBottom(40).row();
+        Label title = new Label("ANGRY BIRDS", UIFactory.createDefaultSkin(game.getAssets()));
+        title.setFontScale(3.2f);
+        title.setColor(Color.WHITE);
+        table.add(title).padBottom(30).row();
 
         table.add(UIFactory.createButton("Play", game.getAssets(), () ->
                 game.getScreenManager().showGame(0))).pad(10).width(250).height(60).row();
