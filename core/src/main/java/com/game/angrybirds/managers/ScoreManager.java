@@ -12,8 +12,16 @@ public class ScoreManager {
     private int birdsRemaining;
 
     public void reset(int birdCount) {
-        currentScore = 0;
-        birdsRemaining = birdCount;
+        this.currentScore = 0;
+        this.birdsRemaining = birdCount;
+    }
+
+    public void setScore(int score) {
+        this.currentScore = score;
+    }
+
+    public void setBirdsRemaining(int birdsRemaining) {
+        this.birdsRemaining = birdsRemaining;
     }
 
     public void addPigScore() {

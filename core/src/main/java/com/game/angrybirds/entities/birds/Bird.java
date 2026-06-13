@@ -21,9 +21,9 @@ public abstract class Bird extends Entity {
         SETTLED
     }
 
-    protected float health = 100f;
-    protected LaunchState launchState = LaunchState.ON_SLINGSHOT;
-    protected boolean abilityUsed;
+    public float health = 100f; // Changed to public for serialization
+    public LaunchState launchState = LaunchState.ON_SLINGSHOT; // Changed to public for serialization
+    public boolean abilityUsed; // Changed to public for serialization
     protected float settleTimer;
 
     public Bird(World world, Sprite sprite, float x, float y) {
@@ -99,7 +99,7 @@ public abstract class Bird extends Entity {
 
     public abstract String getBirdName();
 
-    public LaunchState getLaunchState() {
+    public Bird.LaunchState getLaunchState() {
         return launchState;
     }
 

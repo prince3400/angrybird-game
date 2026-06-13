@@ -14,8 +14,8 @@ import com.game.angrybirds.utils.GameConstants;
  */
 public abstract class Block extends Entity {
 
-    protected float durability;
-    protected float maxDurability;
+    public float durability; // Changed to public for serialization
+    public float maxDurability; // Changed to public for serialization
     protected BlockType blockType;
 
     public Block(World world, Sprite sprite, float x, float y, BlockType type,

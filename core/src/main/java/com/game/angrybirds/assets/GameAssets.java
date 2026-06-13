@@ -31,8 +31,9 @@ public class GameAssets implements Disposable {
     public Texture blockGlass;
     public Texture pigTexture;
     public Texture slingshotTexture;
-    public Texture groundTexture;
+public Texture groundTexture;
     public Texture skyTexture;
+    public Texture mainMenuBackground;
     public Texture trajectoryDot;
     public Texture uiButton;
 
@@ -73,14 +74,39 @@ public class GameAssets implements Disposable {
         Texture pigPng = tryLoadTexture("pig.png");
         if (pigPng != null) pigTexture = pigPng;
 
-        slingshotTexture = TextureGenerator.createRectTexture(16, 80, new Color(0.35f, 0.2f, 0.1f, 1f));
-        groundTexture = TextureGenerator.createRectTexture(128, 32, new Color(0.3f, 0.55f, 0.2f, 1f));
+        // Use provided slingshot sprites if present, otherwise fall back to procedural rectangle.
+        Texture slingBlack = tryLoadTexture("angrybirds/slingblack.png");
+        // Note: repo has slingpart.png + slingshot.png (no slingpart fixture alone).
+        Texture sling = tryLoadTexture("angrybirds/slingshot.png");
+        if (sling == null) sling = tryLoadTexture("angrybirds/slingpart.png");
+
+        if (sling != null) {
+            slingshotTexture = sling;
+        } else if (slingBlack != null) {
+            slingshotTexture = slingBlack;
+        } else {
+            slingshotTexture = TextureGenerator.createRectTexture(16, 80, new Color(0.35f, 0.2f, 0.1f, 1f));
+        }
+        // Use provided ground.png if available, otherwise fall back to procedural green rectangle.
+        Texture groundPng = tryLoadTexture("angrybirds/ground.png");
+        if (groundPng != null) {
+            groundTexture = groundPng;
+        } else {
+            groundTexture = TextureGenerator.createRectTexture(128, 32, new Color(0.3f, 0.55f, 0.2f, 1f));
+        }
+
         skyTexture = TextureGenerator.createRectTexture(4, 4, new Color(0.53f, 0.81f, 0.98f, 1f));
+        mainMenuBackground = tryLoadTexture("angrybirds/background.png");
+        if (mainMenuBackground == null) mainMenuBackground = skyTexture;
         trajectoryDot = TextureGenerator.createDotTexture(8);
         uiButton = TextureGenerator.createRectTexture(200, 60, new Color(0.2f, 0.45f, 0.75f, 1f));
+
         font = new BitmapFont();
+        // Make UI text render crisper (less blurry) on main menu.
         font.getData().setScale(1.2f);
+        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
     }
+
 
     private Texture tryLoadTexture(String relativeAssetPath) {
         try {
@@ -226,6 +252,7 @@ public class GameAssets implements Disposable {
         if (pigTexture != null) pigTexture.dispose();
         if (slingshotTexture != null) slingshotTexture.dispose();
         if (groundTexture != null) groundTexture.dispose();
+        if (mainMenuBackground != null && mainMenuBackground != skyTexture) mainMenuBackground.dispose();
         if (skyTexture != null) skyTexture.dispose();
         if (trajectoryDot != null) trajectoryDot.dispose();
         if (uiButton != null) uiButton.dispose();

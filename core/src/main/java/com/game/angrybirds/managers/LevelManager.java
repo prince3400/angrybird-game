@@ -37,6 +37,14 @@ public class LevelManager {
         this.levelLoader = levelLoader;
     }
 
+    public Array<Bird> getBirdQueue() {
+        return birdQueue;
+    }
+
+    public void setSlingshot(Slingshot slingshot) {
+        this.slingshot = slingshot;
+    }
+
     public void loadLevel(int levelIndex, World world, GameAssets assets) {
         clear(world);
         currentLevel = levelLoader.getLevel(levelIndex);
@@ -46,8 +54,23 @@ public class LevelManager {
         BodyFactory.createGround(world, GameConstants.WORLD_WIDTH / 2f, 60f,
                 GameConstants.WORLD_WIDTH, 40f);
 
-        // Slingshot
-        slingshot = new Slingshot(new Sprite(assets.region(assets.slingshotTexture)));
+        // Slingshot (combine slingshot.png + slingpart.png at runtime)
+        Sprite slingshotSprite = new Sprite(assets.region(assets.slingshotTexture));
+        Sprite slingPartSprite = null;
+        // Try load slingpart.png; if missing, fall back to slingshot.png.
+        try {
+            slingPartSprite = new Sprite(assets.region(new com.badlogic.gdx.graphics.Texture(
+                    com.badlogic.gdx.Gdx.files.internal("angrybirds/slingpart.png"))));
+        } catch (Exception ignored) {
+            slingPartSprite = null;
+        }
+
+        if (slingPartSprite != null) {
+            slingshot = new Slingshot(slingshotSprite, slingPartSprite, 0, 0);
+        } else {
+            slingshot = new Slingshot(slingshotSprite);
+        }
+
 
         // Blocks
         for (LevelData.BlockPlacement placement : currentLevel.blocks) {
@@ -172,6 +195,7 @@ public class LevelManager {
         pigs.clear();
         bodiesToDestroy.clear();
         slingshot = null;
+        currentLevel = null; // Clear current level data
     }
 
     public Slingshot getSlingshot() {
@@ -189,6 +213,18 @@ public class LevelManager {
     public Array<Bird> getActiveBirds() {
         return activeBirds;
     }
+
+    // --- Save/restore support for bird queue progress ---
+    // currentBirdIndex indicates how many birds have been spawned from the queue.
+    // The currently attached bird (if any) is always the one referenced by slingshot.
+    public int getCurrentBirdIndex() {
+        return currentBirdIndex;
+    }
+
+    public void setCurrentBirdIndex(int currentBirdIndex) {
+        this.currentBirdIndex = Math.max(0, currentBirdIndex);
+    }
+
 
     public LevelData getCurrentLevel() {
         return currentLevel;

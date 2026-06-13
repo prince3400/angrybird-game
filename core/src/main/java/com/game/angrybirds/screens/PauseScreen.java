@@ -36,7 +36,8 @@ public class PauseScreen extends AbstractScreen {
         title.setFontScale(2f);
         table.add(title).padBottom(30).row();
 
-        table.add(UIFactory.createButton("Resume", game.getAssets(), () -> {
+        table.add(UIFactory.createButton("RESUME", game.getAssets(), () -> {
+
             if (gameScreen != null) {
                 game.setScreen(gameScreen);
                 gameScreen.resumeFromPause();
@@ -50,8 +51,9 @@ public class PauseScreen extends AbstractScreen {
             }
         })).pad(10).width(250).height(60).row();
 
-        table.add(UIFactory.createButton("Main Menu", game.getAssets(), () ->
+        table.add(UIFactory.createButton("QUIT", game.getAssets(), () ->
                 game.getScreenManager().showMainMenu())).pad(10).width(250).height(60).row();
+
 
         stage.addActor(table);
     }

@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.Batch;
+
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.game.angrybirds.AngryBirdsGame;
@@ -42,8 +45,21 @@ public class MainMenuScreen extends AbstractScreen {
         table.add(UIFactory.createButton("Level Select", game.getAssets(), () ->
                 game.getScreenManager().showLevelSelect())).pad(10).width(250).height(60).row();
 
+
+
+
+
+
+        if (game.getSaveManager().hasSavedGame()) {
+            table.add(UIFactory.createButton("LOAD", game.getAssets(), () -> {
+                int savedLevel = game.getSaveManager().getSavedLevelIndex();
+                game.getScreenManager().showGame(savedLevel);
+            })).pad(10).width(250).height(60).row();
+        }
+
         table.add(UIFactory.createButton("Quit", game.getAssets(), Gdx.app::exit))
                 .pad(10).width(250).height(60).row();
+
 
         Label highScore = new Label("High Score: " + game.getSaveManager().getHighScore(),
                 UIFactory.createDefaultSkin(game.getAssets()));
@@ -67,7 +83,7 @@ public class MainMenuScreen extends AbstractScreen {
         game.getBatch().begin();
 
         // Base background.
-        Sprite sky = new Sprite(game.getAssets().region(game.getAssets().skyTexture));
+Sprite sky = new Sprite(game.getAssets().region(game.getAssets().mainMenuBackground));
         sky.setSize(GameConstants.WORLD_WIDTH, GameConstants.WORLD_HEIGHT);
         sky.draw(game.getBatch());
 
@@ -100,5 +116,7 @@ public class MainMenuScreen extends AbstractScreen {
 
         stage.act(delta);
         stage.draw();
+
     }
 }
+

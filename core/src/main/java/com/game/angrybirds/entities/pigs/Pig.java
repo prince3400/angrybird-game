@@ -15,9 +15,9 @@ import com.game.angrybirds.utils.GameConstants;
  */
 public class Pig extends Entity {
 
-    private float health = 50f;
+    private float health = 50f; // Changed to public for serialization
     private float deathTimer;
-    private boolean dying;
+    public boolean dying; // Changed to public for serialization
 
     // Visual alignment: Entity.syncSpriteToBody already centers sprite on the Box2D body.
     // If the pig PNG has transparent padding, the visible pig may appear to "hover".
@@ -69,20 +69,14 @@ public class Pig extends Entity {
             switchToDynamicOnUpdate = false;
         }
 
-        // Prevent upward motion (pigs should never "fly" upward on spawn).
-        // Keep horizontal velocity intact.
-        if (body != null) {
-            Vector2 v = body.getLinearVelocity();
-            if (v.y > 0f) {
-                body.setLinearVelocity(v.x, 0f);
-            }
-        }
+        // If the pig is currently supported by a block/contact, Box2D will keep it at rest.
+        // When the block falls/breaks, the pig must become dynamic and continue falling.
+        // So we do NOT forcefully clamp upward velocity to 0 here (it can cause the pig
+        // to appear stuck mid-air after support is removed).
 
-        // Visual alignment compensation: keep the rendered pig snug against the
-        // Box2D contact point even if the PNG has transparent padding.
-        // if (sprite != null) {
-        //     sprite.setPosition(sprite.getX(), sprite.getY() + VISUAL_OFFSET_Y_PIXELS);
-        // }
+
+        // Keep sprite in sync with physics (Entity.syncSpriteToBody is called by Entity.update())
+        // This enables the pig sprite to move/rotate with the Box2D body.
 
         if (dying) {
             deathTimer += delta;
@@ -104,7 +98,7 @@ public class Pig extends Entity {
         }
     }
 
-    private void startDeath() {
+    public void startDeath() {
         dying = true;
         alive = false;
 
